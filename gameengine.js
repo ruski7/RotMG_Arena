@@ -115,5 +115,3 @@ class GameEngine {
     };
 
 };
-
-// KV Le was here :)
