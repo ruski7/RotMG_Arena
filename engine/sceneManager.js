@@ -8,8 +8,8 @@ class SceneManager {
         this.gameOver = false;
 
         //testing animations - sceneManager
-        //this.test = new RedStoneGuardian(this.game, 0, 0)
-        //this.game.addEntity(this.test);
+        this.player = new Archer(this.game, 0, 0)
+        this.game.addEntity(this.player);
 
     };
 
