@@ -21,11 +21,79 @@ class SceneManager {
     draw(ctx) {
 
         if(PARAMS.DEBUG) {
-            //console.log("debug");
-            this.viewDebug(ctx);
+
+            /*
+            let xV = "xV=" + Math.floor(this.game.mario.velocity.x);
+            let yV = "yV=" + Math.floor(this.game.mario.velocity.y);
+            ctx.fillText(xV, 1.5 * PARAMS.BLOCKWIDTH, 2.5 * PARAMS.BLOCKWIDTH);
+            ctx.fillText(yV, 1.5 * PARAMS.BLOCKWIDTH, 3 * PARAMS.BLOCKWIDTH);
+            */
+
+            ctx.translate(0, -10); // hack to move elements up by 10 pixels instead of adding -10 to all y coordinates below
+            ctx.strokeStyle = "White";
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = this.game.left ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.strokeRect(6 * PARAMS.BLOCKWIDTH - 2, 2.5 * PARAMS.BLOCKWIDTH - 2, 0.5 * PARAMS.BLOCKWIDTH + 2, 0.5 * PARAMS.BLOCKWIDTH + 2);
+            ctx.fillText("L", 6 * PARAMS.BLOCKWIDTH, 3 * PARAMS.BLOCKWIDTH);
+
+            ctx.strokeStyle = this.game.down ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.strokeRect(6.5 * PARAMS.BLOCKWIDTH, 3 * PARAMS.BLOCKWIDTH, 0.5 * PARAMS.BLOCKWIDTH + 2, 0.5 * PARAMS.BLOCKWIDTH + 2);
+            ctx.fillText("D", 6.5 * PARAMS.BLOCKWIDTH + 2, 3.5 * PARAMS.BLOCKWIDTH + 2);
+
+            ctx.strokeStyle = this.game.up ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.strokeRect(6.5 * PARAMS.BLOCKWIDTH, 2 * PARAMS.BLOCKWIDTH - 4, 0.5 * PARAMS.BLOCKWIDTH + 2, 0.5 * PARAMS.BLOCKWIDTH + 2);
+            ctx.fillText("U", 6.5 * PARAMS.BLOCKWIDTH + 2, 2.5 * PARAMS.BLOCKWIDTH - 2);
+
+            ctx.strokeStyle = this.game.right ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.strokeRect(7 * PARAMS.BLOCKWIDTH + 2, 2.5 * PARAMS.BLOCKWIDTH - 2, 0.5 * PARAMS.BLOCKWIDTH + 2, 0.5 * PARAMS.BLOCKWIDTH + 2);
+            ctx.fillText("R", 7 * PARAMS.BLOCKWIDTH + 4, 3 * PARAMS.BLOCKWIDTH);
+
+            ctx.strokeStyle = this.game.ability ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.beginPath();
+            ctx.arc(8.25 * PARAMS.BLOCKWIDTH + 2, 2.75 * PARAMS.BLOCKWIDTH, 0.25 * PARAMS.BLOCKWIDTH + 4, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillText("A", 8 * PARAMS.BLOCKWIDTH + 4, 3 * PARAMS.BLOCKWIDTH);
+
+            ctx.strokeStyle = this.game.nexus ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.beginPath();
+            ctx.arc(9 * PARAMS.BLOCKWIDTH + 2, 2.75 * PARAMS.BLOCKWIDTH, 0.25 * PARAMS.BLOCKWIDTH + 4, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillText("B", 8.75 * PARAMS.BLOCKWIDTH + 4, 3 * PARAMS.BLOCKWIDTH);
+
+            ctx.strokeStyle = this.game.hp ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.beginPath();
+            ctx.arc(9.75 * PARAMS.BLOCKWIDTH + 2, 2.75 * PARAMS.BLOCKWIDTH, 0.25 * PARAMS.BLOCKWIDTH + 4, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillText("C", 9.5 * PARAMS.BLOCKWIDTH + 4, 3 * PARAMS.BLOCKWIDTH);
+
+            ctx.strokeStyle = this.game.mp ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.beginPath();
+            ctx.arc(10.5 * PARAMS.BLOCKWIDTH + 2, 2.75 * PARAMS.BLOCKWIDTH, 0.25 * PARAMS.BLOCKWIDTH + 4, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillText("D", 10.25 * PARAMS.BLOCKWIDTH + 4, 3 * PARAMS.BLOCKWIDTH);
+
+            ctx.strokeStyle = this.game.click ? "White" : "Grey";
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.beginPath();
+            ctx.arc(11.25 * PARAMS.BLOCKWIDTH + 2, 2.75 * PARAMS.BLOCKWIDTH, 0.25 * PARAMS.BLOCKWIDTH + 4, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillText("E", 11 * PARAMS.BLOCKWIDTH + 4, 3 * PARAMS.BLOCKWIDTH);
+
+            ctx.translate(0, 10);
+            ctx.strokeStyle = "White";
+            ctx.fillStyle = ctx.strokeStyle;
+
         }
     };
-
+    /*
     loadLevel1() {
         let bg = new Background(this.game);
         let ground = new Ground(this.game, 0, this.game.surfaceHeight - 64, this.game.surfaceWidth, PARAMS.BLOCKWIDTH);
@@ -35,57 +103,6 @@ class SceneManager {
         //this.game.addEntity(platform);
         this.game.addEntity(bg);
     }
+    */
 
-    //keyboard input
-    viewDebug(ctx) {;
-        // left debug
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = this.game.left ? "Red" : "SpringGreen";
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.strokeRect(10, this.game.surfaceHeight - 40, 30, 30);
-        ctx.fillText("A", 20, this.game.surfaceHeight - 20);
-
-        // down debug
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = this.game.down ? "Red" : "SpringGreen";
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.strokeRect(50, this.game.surfaceHeight -40, 30, 30);
-        ctx.fillText("S", 60, this.game.surfaceHeight - 20);
-
-        // up debug
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = this.game.up ? "Red" : "SpringGreen";
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.strokeRect(50, this.game.surfaceHeight -80, 30, 30);
-        ctx.fillText("W", 60, this.game.surfaceHeight - 60);
-
-        // right debug
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = this.game.right  ? "Red" : "SpringGreen";
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.strokeRect(90, this.game.surfaceHeight -40, 30, 30);
-        ctx.fillText("D", 100, this.game.surfaceHeight - 20);
-
-        // jump debug
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = this.game.jump  ? "Red" : "SpringGreen";
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.strokeRect(130, this.game.surfaceHeight -40, 50, 30);
-        ctx.fillText("SPACE", 140, this.game.surfaceHeight - 20);
-
-		// roll debug
-		ctx.lineWidth = 2;
-		ctx.strokeStyle = this.game.roll ? "Red" : "SpringGreen";
-		ctx.fillStyle = ctx.strokeStyle;
-		ctx.strokeRect(130, this.game.surfaceHeight - 80, 50, 30);
-		ctx.fillText("LSHIFT", 140, this.game.surfaceHeight - 60);  
-
-        // attack debug
-    
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = this.game.attack  ? "Red" : "SpringGreen";
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.strokeRect(190, this.game.surfaceHeight -40, 30, 30);
-        ctx.fillText("ATK", 195, this.game.surfaceHeight - 20);
-	}
 }

@@ -24,7 +24,22 @@
     
 </head>
 <body>
-    <canvas id="gameWorld" width="1024" height="768" style="background: rgb(0, 0, 0); border: 1px solid rgb(255, 255, 255)"></canvas>
-    <!--canvas id="gameWorld" width="1024" height="768" style="background: white; border: 1px solid black"></canvas-->
+    <canvas id="gameWorld" width="1024" height="768" style="background: rgb(0, 0, 0); border: 1px solid rgb(255, 255, 255)" tabindex = "0" autofocus></canvas>
+    <!--canvas id="gameWorld" width="1024" height="768" style="background: white; border: 1px solid black" tabindex ="0" autofocus></canvas-->
+    <div>
+        <input type="checkbox" id="debug" checked> Debug 
+    </div>
+
+    <ul id="controls">
+        <b>CONTROLS:</b>
+        <p></p>
+        <li><b>(WASD)</b> to Move </li>
+        <li><b>(Mouse | Left Click)</b> to Aim and Shoot</li>
+        <li><b>(Space)</b> to use Special Ability</li>
+        <li><b>(E)</b> to teleport to Nexus</li>
+        <li><b>(F)</b> to consume HP potion</li>
+        <li><b>(Q)</b> to comsume MP potion</li>
+    </ul>
+
 </body>
 </html>

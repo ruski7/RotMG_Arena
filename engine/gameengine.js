@@ -11,18 +11,41 @@ class GameEngine {
 
         // Information on the input
         this.click = null;
+        this.clicklocation = null;
         this.mouse = null;
         this.wheel = null;
-        this.keys = {};
+        
+        //controls
+        this.left = null;
+        this.right = null;
+        this.down = null;
+        this.up = null;
+        this.ability = null;
+        this.nexus = null;
+        this.hp = null;
+        this.mp = null;
+
+        //height for debug
+        this.surfaceWidth = null;
+        this.surfaceHeight = null;
 
         // Options and the Details
         this.options = options || {
-            debugging: false,
+            prevent: {
+                contextMenu: true,
+                scrolling: true,
+            },
+            mouseMove: false,
+            mouseclick: true,
+            debugging: true,
         };
     };
 
     init(ctx) {
         this.ctx = ctx;
+        this.surfaceWidth = this.ctx.canvas.width;
+        this.surfaceHeight = this.ctx.canvas.height;
+
         this.startInput();
         this.timer = new Timer();
     };
@@ -37,43 +60,127 @@ class GameEngine {
     };
 
     startInput() {
+
+        console.log('Starting input');
+
+        var that = this;
+        
         const getXandY = e => ({
             x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
             y: e.clientY - this.ctx.canvas.getBoundingClientRect().top
         });
-        
-        this.ctx.canvas.addEventListener("mousemove", e => {
-            if (this.options.debugging) {
-                console.log("MOUSE_MOVE", getXandY(e));
-            }
-            this.mouse = getXandY(e);
-        });
 
+        // Keyboard Events
+        this.ctx.canvas.addEventListener("keydown",  (e) => {
+            e.preventDefault(); //prevents scrolling from pressing any key
+            switch(e.code) {
+                case "KeyW":
+                    console.log("W Down");
+                    that.up = true;
+                    break;
+                case "KeyD":
+                    console.log("D Down");
+                    that.right = true;
+                    break;
+                case "KeyS":
+                    console.log("S Down");
+                    that.down = true;
+                    break;
+                case "KeyA":
+                    console.log("A Down");
+                    that.left = true;
+                    break;
+                case "Space":
+                    console.log("Space Down");
+                    that.ability = true;
+                    break;
+                case "KeyE":
+                    console.log("E Down");
+                    that.nexus = true;
+                    break;
+                case "KeyQ":
+                    console.log("Q Down");
+                    that.hp = true;
+                    break;
+                case "KeyF":
+                    console.log("F Down");
+                    that.mp = true;
+                    break;
+            }
+        }, false);
+
+        // Keyboard Events
+        this.ctx.canvas.addEventListener("keyup",  (e) => {
+            e.preventDefault(); //prevents scrolling from pressing any key
+            switch(e.code) {
+                case "KeyW":
+                    that.up = false;
+                    break;
+                case "KeyD":
+                    that.right = false;
+                    break;
+                case "KeyS":
+                    that.down = false;
+                    break;
+                case "KeyA":
+                    that.left = false;
+                    break;
+                case "Space":
+                    that.ability = false;
+                    break;
+                case "KeyE":
+                    that.nexus = false;
+                    break;
+                case "KeyQ":
+                    that.hp = false;
+                    break;
+                case "KeyF":
+                    that.mp = false;
+                    break;
+            }
+        }, false);
+
+
+
+        // Mouse Events
+        this.ctx.canvas.addEventListener("mousemove", e => {
+            if (this.options.debugging && this.options.mouseMove) {
+                console.log("Mouse Moved", getXandY(e));
+            }
+            that.mouse = getXandY(e);
+        }, false);
+
+        /*
+        // Activates only until mousedown and mouseup have been done 
         this.ctx.canvas.addEventListener("click", e => {
             if (this.options.debugging) {
                 console.log("CLICK", getXandY(e));
             }
-            this.click = getXandY(e);
-        });
+        }, false);
+        */
 
+        this.ctx.canvas.addEventListener("mousedown", e => {
+            that.clicklocation = getXandY(e);
+            that.click = true;
+        }, false);
+
+        this.ctx.canvas.addEventListener("mouseup", e => {
+            that.clicklocation = getXandY(e);
+            that.click = false;
+        }, false);
+
+        /*
         this.ctx.canvas.addEventListener("wheel", e => {
             if (this.options.debugging) {
                 console.log("WHEEL", getXandY(e), e.wheelDelta);
             }
-            e.preventDefault(); // Prevent Scrolling
+            if (this.options.prevent.scrolling) {
+                e.preventDefault(); // Prevent Scrolling
+            }
             this.wheel = e;
         });
+        */
 
-        this.ctx.canvas.addEventListener("contextmenu", e => {
-            if (this.options.debugging) {
-                console.log("RIGHT_CLICK", getXandY(e));
-            }
-            e.preventDefault(); // Prevent Context Menu
-            this.rightclick = getXandY(e);
-        });
-
-        this.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
-        this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
     };
 
     addEntity(entity) {
@@ -88,6 +195,8 @@ class GameEngine {
         for (let i = this.entities.length - 1; i >= 0; i--) {
             this.entities[i].draw(this.ctx, this);
         }
+
+        this.camera.draw(this.ctx);
     };
 
     update() {
@@ -106,6 +215,7 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         }
+        this.camera.update();
     };
 
     loop() {
