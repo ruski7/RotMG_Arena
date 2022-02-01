@@ -13,13 +13,14 @@ class Archer {
         this.states = {idle: 0, move: 1, attack: 2};
         this.directions = {up: 0, right: 1, down: 2, left: 3}; // Rotational | NESW : Clockwise - _N_ever, _E_at, _S_limy, _W_orms  
         this.animations = []; // [state][direction]
-        this.trueState = 0;
+        
 
         this.state = 0;
         this.direction = 0;
 
         // Other
         this.loadAnimations();
+
     };
 
     loadAnimations() {
@@ -43,10 +44,10 @@ class Archer {
         this.animations[0][3] = new Animator(this.spritesheet, 0, 0,    8, 8, 1, 1, 0, 0, 1, 0);
 
         // Move Animations
-        this.animations[1][0] = new Animator(this.spritesheet, 8, 24,   8, 8, 2, 0.4, 0, 0, 1, 0);
-        this.animations[1][1] = new Animator(this.spritesheet, 0, 8,    8, 8, 2, 0.4, 0, 0, 1, 0);
-        this.animations[1][2] = new Animator(this.spritesheet, 8, 16,   8, 8, 2, 0.4, 0, 0, 1, 0);
-        this.animations[1][3] = new Animator(this.spritesheet, 0, 0,    8, 8, 2, 0.4, 0, 0, 1, 0);
+        this.animations[1][0] = new Animator(this.spritesheet, 8, 24,   8, 8, 2, 0.3, 0, 0, 1, 0);
+        this.animations[1][1] = new Animator(this.spritesheet, 0, 8,    8, 8, 2, 0.3, 0, 0, 1, 0);
+        this.animations[1][2] = new Animator(this.spritesheet, 8, 16,   8, 8, 2, 0.3, 0, 0, 1, 0);
+        this.animations[1][3] = new Animator(this.spritesheet, 0, 0,    8, 8, 2, 0.3, 0, 0, 1, 0);
 
         // Attack Animation
         this.animations[2][0] = new Animator(this.spritesheet, 32, 24,  8, 8, 2, 0.2, 0, 0, 1, 0);
@@ -75,26 +76,49 @@ class Archer {
 
         if(this.game.click){
             this.state = 2;
+
+            const {x, y} = this.game?.mouse ?? {x: 0, y: 0}
+
+            if((y < (x - 128) ) && (y < (-x + 896) ))
+                this.direction = 0;
+            if((y < (x - 128) ) && (y >= (-x + 896) ))
+                this.direction = 1;
+            if( (y >= (x - 128)) && (y >= (-x + 896)) )
+                this.direction = 2;
+            if((y >= (x - 128) ) && (y < (-x + 896) ))
+                this.direction = 3;
         }
-        else if (this.game.up || this.game.right || this.game.down || this.game.left) {
+        else if ((this.game.up || this.game.right || this.game.down || this.game.left)) { // To implement in future, if velocity = 0 then state = 0
             this.state = 1;
+
+            // RotMG replica for move and turning direction
+            if(this.game.up && !this.game.down && !this.game.left)
+                this.direction = 0;
+            else if(!this.game.up && this.game.right && !this.game.left)
+                this.direction = 1;
+            else if(!this.game.up && !this.game.right && this.game.down)
+                this.direction = 2;
+            else if( !this.game.right && !this.game.down && this.game.left)
+                this.direction = 3;
+
+            /*
+            if(this.game.up && !this.game.right && !this.game.down && !this.game.left)
+                this.direction = 0;
+            else if(!this.game.up && this.game.right && !this.game.down && !this.game.left)
+                this.direction = 1;
+            else if(!this.game.up && !this.game.right && this.game.down && !this.game.left)
+                this.direction = 2;
+            else if(!this.game.up && !this.game.right && !this.game.down && this.game.left)
+                this.direction = 3;    
+            */
+
+
         }
         else {
             this.state = 0;
         }
-
-        if(this.game.up){
-            this.direction = 0;
-        }
-        else if(this.game.right){
-            this.direction = 1;
-        }
-        else if(this.game.down){
-            this.direction = 2;
-        }
-        else if(this.game.left){
-            this.direction = 3;
-        }
+        
+        
 
     };
 
