@@ -11,7 +11,6 @@ class GameEngine {
 
         // Information on the input
         this.click = null;
-        this.clicklocation = null;
         this.mouse = null;
         this.wheel = null;
         
@@ -142,22 +141,20 @@ class GameEngine {
             that.mouse = getXandY(e);
         }, false);
 
-        /*
+        
         // Activates only until mousedown and mouseup have been done 
         this.ctx.canvas.addEventListener("click", e => {
             if (this.options.debugging) {
                 console.log("CLICK", getXandY(e));
             }
         }, false);
-        */
+        
 
         this.ctx.canvas.addEventListener("mousedown", e => {
-            that.clicklocation = getXandY(e);
             that.click = true;
         }, false);
 
         this.ctx.canvas.addEventListener("mouseup", e => {
-            that.clicklocation = getXandY(e);
             that.click = false;
         }, false);
 
