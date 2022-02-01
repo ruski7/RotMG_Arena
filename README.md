@@ -8,5 +8,5 @@
  The goal of this project is to simulate RotMG featuring the Arena on the Web.
  My idea is to add in unique features like customizable battles for gear and enemies,
  bosses, and challege rounds to spice things up.
- Not only would this be a Arena but also possibly a training grounds for learning
+ Not only would this be an Arena but also possibly a training grounds for learning
  and fighting new bosses.
