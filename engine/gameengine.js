@@ -75,35 +75,27 @@ class GameEngine {
             e.preventDefault(); //prevents scrolling from pressing any key
             switch(e.code) {
                 case "KeyW":
-                    console.log("W Down");
                     that.up = true;
                     break;
                 case "KeyD":
-                    console.log("D Down");
                     that.right = true;
                     break;
                 case "KeyS":
-                    console.log("S Down");
                     that.down = true;
                     break;
                 case "KeyA":
-                    console.log("A Down");
                     that.left = true;
                     break;
                 case "Space":
-                    console.log("Space Down");
                     that.ability = true;
                     break;
                 case "KeyE":
-                    console.log("E Down");
                     that.nexus = true;
                     break;
                 case "KeyQ":
-                    console.log("Q Down");
                     that.hp = true;
                     break;
                 case "KeyF":
-                    console.log("F Down");
                     that.mp = true;
                     break;
             }

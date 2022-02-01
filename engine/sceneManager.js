@@ -2,13 +2,15 @@ class SceneManager {
     constructor(game) {
         this.game = game;
         this.game.camera = this; //add scene manager as an entity to game engine
+        this.screenwidth = 1024;
+        this.screenheight = 768;
         
         //game status
         this.title = false;
         this.gameOver = false;
 
         //testing animations - sceneManager
-        this.player = new Archer(this.game, 0, 0)
+        this.player = new Archer(this.game, this.screenwidth/2 - (8 * 7)/2, this.screenheight/2 - (8 * 7)/2) // subracted player WIDTH or HEIGHT (same size) * SCALE / 2 to center it in the screen
         this.game.addEntity(this.player);
 
     };

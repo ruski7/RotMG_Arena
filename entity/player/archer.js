@@ -6,8 +6,8 @@ class Archer {
         
         // Player sizes
         this.scale = 7; // 2.5
-        this.width = 33 * this.scale;
-        this.height = 36 * this.scale;
+        this.width = 8 * this.scale;
+        this.height = 8 * this.scale;
 
         // Mapping animations and mob states
         this.states = {idle: 0, move: 1, attack: 2};
