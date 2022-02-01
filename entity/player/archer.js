@@ -14,7 +14,6 @@ class Archer {
         this.directions = {up: 0, right: 1, down: 2, left: 3}; // Rotational | NESW : Clockwise - _N_ever, _E_at, _S_limy, _W_orms  
         this.animations = []; // [state][direction]
         
-
         this.state = 0;
         this.direction = 0;
 
@@ -88,7 +87,7 @@ class Archer {
             if((y >= (x - 128) ) && (y < (-x + 896) ))
                 this.direction = 3;
         }
-        else if ((this.game.up || this.game.right || this.game.down || this.game.left)) { // To implement in future, if velocity = 0 then state = 0
+        else if ((this.game.up || this.game.right || this.game.down || this.game.left)) { // To implement in future, if velocityx/y = 0 then state = 0
             this.state = 1;
 
             // RotMG replica for move and turning direction
