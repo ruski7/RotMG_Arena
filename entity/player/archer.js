@@ -37,22 +37,22 @@ class Archer {
         // (X, Y,   Width, Height, Images, Animation Speed, White Space Betwen Images, ?, Loop, ?) 
 
         // Idle Animations
-        this.animations[0][0] = new Animator(this.spritesheet, 0, 24,   8, 8, 1, 1, 0, 0, 1, 0);
-        this.animations[0][1] = new Animator(this.spritesheet, 0, 8,    8, 8, 1, 1, 0, 0, 1, 0);
-        this.animations[0][2] = new Animator(this.spritesheet, 0, 16,   8, 8, 1, 1, 0, 0, 1, 0);
-        this.animations[0][3] = new Animator(this.spritesheet, 0, 0,    8, 8, 1, 1, 0, 0, 1, 0);
+        this.animations[0][this.directions.up] = new Animator(this.spritesheet,    0, 24,  9, 8, 1, 1, 0, 0, 1, 0);
+        this.animations[0][this.directions.right] = new Animator(this.spritesheet, 0, 8,   9, 8, 1, 1, 0, 0, 1, 0);
+        this.animations[0][this.directions.down] = new Animator(this.spritesheet,  0, 16,  9, 8, 1, 1, 0, 0, 1, 0);
+        this.animations[0][this.directions.left] = new Animator(this.spritesheet,  0, 0,   9, 8, 1, 1, 0, 0, 1, 0);
 
         // Move Animations
-        this.animations[1][0] = new Animator(this.spritesheet, 8, 24,   8, 8, 2, 0.3, 0, 0, 1, 0);
-        this.animations[1][1] = new Animator(this.spritesheet, 0, 8,    8, 8, 2, 0.3, 0, 0, 1, 0);
-        this.animations[1][2] = new Animator(this.spritesheet, 8, 16,   8, 8, 2, 0.3, 0, 0, 1, 0);
-        this.animations[1][3] = new Animator(this.spritesheet, 0, 0,    8, 8, 2, 0.3, 0, 0, 1, 0);
+        this.animations[1][this.directions.up] = new Animator(this.spritesheet,    9, 24,  9, 8, 2, 0.3, 0, 0, 1, 0);
+        this.animations[1][this.directions.right] = new Animator(this.spritesheet, 0, 8,   9, 8, 2, 0.3, 0, 0, 1, 0);
+        this.animations[1][this.directions.down] = new Animator(this.spritesheet,  9, 16,  9, 8, 2, 0.3, 0, 0, 1, 0);
+        this.animations[1][this.directions.left] = new Animator(this.spritesheet,  0, 0,   9, 8, 2, 0.3, 0, 0, 1, 0);
 
         // Attack Animation
-        this.animations[2][0] = new Animator(this.spritesheet, 32, 24,  8, 8, 2, 0.2, 0, 0, 1, 0);
-        this.animations[2][1] = new Animator(this.spritesheet, 32, 8,   8, 8, 2, 0.2, 0, 0, 1, 0);
-        this.animations[2][2] = new Animator(this.spritesheet, 32, 16,  8, 8, 2, 0.2, 0, 0, 1, 0);
-        this.animations[2][3] = new Animator(this.spritesheet, 32, 0,   8, 8, 2, 0.2, 0, 0, 1, 0);
+        this.animations[2][this.directions.up] = new Animator(this.spritesheet,    30, 24,  9, 8, 2, 0.2, 0, 0, 1, 0);
+        this.animations[2][this.directions.right] = new Animator(this.spritesheet, 30, 8,   9, 8, 2, 0.2, 0, 0, 1, 0);
+        this.animations[2][this.directions.down] = new Animator(this.spritesheet,  30, 16,  9, 8, 2, 0.2, 0, 0, 1, 0);
+        this.animations[2][this.directions.left] = new Animator(this.spritesheet,  30, 0,   9, 8, 2, 0.2, 0, 0, 1, 0);
 
     };
 
