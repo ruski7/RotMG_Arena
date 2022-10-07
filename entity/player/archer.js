@@ -6,7 +6,7 @@ class Archer {
         
         // Player sizes
         this.scale = 7; // 2.5
-        this.width = 8 * this.scale;
+        this.width = 9 * this.scale;
         this.height = 8 * this.scale;
 
         // Mapping animations and mob states
@@ -34,7 +34,7 @@ class Archer {
         }
 
         // Animations  [state][direction]
-        // (X, Y,   Width, Height, Images, Animation Speed, White Space Betwen Images, ?, Loop, ?) 
+        // (X, Y,   Width, Height, Images, Animation Speed, White Space Betwen Images, Reversed, Loop, Flipped) 
 
         // Idle Animations
         this.animations[0][this.directions.up] = new Animator(this.spritesheet,    0, 24,  9, 8, 1, 1, 0, 0, 1, 0);
@@ -58,6 +58,10 @@ class Archer {
 
     draw(ctx) {
 
+        if(PARAMS.DEBUG){
+            this.drawDebug(ctx);
+        }
+
         switch(this.state) {
             case 0: // Idle
                 this.animations[this.state][this.direction].drawFrame(this.game.clockTick, ctx, this.x, this.y, this.scale);
@@ -71,7 +75,17 @@ class Archer {
         }
     };
 
+    drawDebug(ctx) {
+        ctx.strokeStyle = "Red";
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
+
+        //     ctx.fillStyle = "White"
+        //     ctx.fillText("Chest", this.x - this.game.camera.x, this.y - this.game.camera.y + 20);
+        //     ctx.fillText("Contents: ", this.x - this.game.camera.x, this.y - this.game.camera.y + 10);
+    }
+
     update() {
+
 
         if(this.game.click){
             this.state = 2;

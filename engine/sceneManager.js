@@ -4,6 +4,8 @@ class SceneManager {
         this.game.camera = this; //add scene manager as an entity to game engine
         this.screenwidth = 1024;
         this.screenheight = 768;
+
+        this.myCursor = new Cursor(this.game);
         
         //game status
         this.title = false;
@@ -12,15 +14,27 @@ class SceneManager {
         //testing animations - sceneManager
         this.player = new Archer(this.game, this.screenwidth/2 - (8 * 7)/2, this.screenheight/2 - (8 * 7)/2) // subracted player WIDTH or HEIGHT (same size) * SCALE / 2 to center it in the screen
         this.game.addEntity(this.player);
+        this.game.addEntity(new Cursor(this.game));
 
     };
 
     update() {
+
+        this.myCursor.update();
+
         //console.log("scene manager updated");
         PARAMS.DEBUG = document.getElementById("debug").checked;
+        
+        if (this.game.debug) {
+            this.game.debug = false;
+            document.getElementById("debug").checked = !document.getElementById("debug").checked;
+        }
+        
     };
 
     draw(ctx) {
+
+        this.myCursor.draw(ctx);
 
         if(PARAMS.DEBUG) {
 
