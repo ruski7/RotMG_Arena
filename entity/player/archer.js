@@ -17,6 +17,9 @@ class Archer {
         this.state = 0;
         this.direction = 0;
 
+        this.velocity = { up: 0, down: 0, left: 0, right: 0 };
+        this.velocitySpeed = 200;
+
         // Other
         this.loadAnimations();
 
@@ -86,6 +89,43 @@ class Archer {
 
     update() {
 
+        const TICK = this.game.clockTick;
+        
+        this.PlayerMovement(TICK);
+        this.PlayerDirectionState();
+
+    };
+
+    PlayerMovement(TICK){
+
+        //console.log("Velocity: " + this.velocity.y + ", " + this.velocity.x);
+
+        // Velocity reset
+        this.velocity.up = 0;
+        this.velocity.down = 0;
+        this.velocity.left = 0;
+        this.velocity.right = 0;
+
+        if(this.game.up) this.velocity.up = this.velocitySpeed;
+        if(this.game.down) this.velocity.down = this.velocitySpeed;
+        if(this.game.left) this.velocity.left = this.velocitySpeed;
+        if(this.game.right) this.velocity.right = this.velocitySpeed;
+
+        let vel_x = (this.velocity.right - this.velocity.left);
+        let vel_y = (this.velocity.up - this.velocity.down);
+
+        // Checks for vertical movement and corrects magnitude  
+        if(vel_x != 0 && vel_y != 0){
+            vel_x /= 1.414213562373095;
+            vel_y /= 1.414213562373095;
+        }
+
+        // Moves player position based on current velocity
+        this.x += vel_x * TICK;
+        this.y -= vel_y * TICK;
+    }
+
+    PlayerDirectionState(){
 
         if(this.game.click){
             this.state = 2;
@@ -124,15 +164,9 @@ class Archer {
             else if(!this.game.up && !this.game.right && !this.game.down && this.game.left)
                 this.direction = 3;    
             */
-
-
         }
         else {
             this.state = 0;
         }
-        
-        
-
-    };
-
+    }
 };
