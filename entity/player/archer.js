@@ -9,6 +9,10 @@ class Archer {
         this.width = 9 * this.scale;
         this.height = 8 * this.scale;
 
+        // Hold the true middle point of player character
+        this.X = this.x + this.width / 2;
+        this.Y = this.y + this.width / 2;
+
         // Mapping animations and mob states
         this.states = {idle: 0, move: 1, attack: 2};
         this.directions = {up: 0, right: 1, down: 2, left: 3}; // Rotational | NESW : Clockwise - _N_ever, _E_at, _S_limy, _W_orms  
@@ -82,6 +86,18 @@ class Archer {
         ctx.strokeStyle = "Red";
         ctx.strokeRect(this.x, this.y, this.width, this.height);
 
+        // Draws players vision direction box
+        ctx.strokeStyle = "Blue";
+        ctx.beginPath();
+        ctx.moveTo(this.X - 1000, this.Y - 1000);
+        ctx.lineTo(this.X + 1000, this.Y + 1000);
+        ctx.stroke(); 
+
+        ctx.beginPath();
+        ctx.moveTo(this.X - 1000, this.Y + 1000);
+        ctx.lineTo(this.X + 1000, this.Y - 1000);
+        ctx.stroke(); 
+
         //     ctx.fillStyle = "White"
         //     ctx.fillText("Chest", this.x - this.game.camera.x, this.y - this.game.camera.y + 20);
         //     ctx.fillText("Contents: ", this.x - this.game.camera.x, this.y - this.game.camera.y + 10);
@@ -91,12 +107,20 @@ class Archer {
 
         const TICK = this.game.clockTick;
         
-        this.PlayerMovement(TICK);
-        this.PlayerDirectionState();
+        this.updatePlayerInfo();
+        this.playerMovement(TICK);
+        this.playerDirectionState();
+        
 
     };
 
-    PlayerMovement(TICK){
+    updatePlayerInfo(){
+        // Hold the true middle point of player character
+        this.X = this.x + this.width / 2;
+        this.Y = this.y + this.width / 2;
+    }
+
+    playerMovement(TICK){
 
         //console.log("Velocity: " + this.velocity.y + ", " + this.velocity.x);
 
@@ -125,21 +149,49 @@ class Archer {
         this.y -= vel_y * TICK;
     }
 
-    PlayerDirectionState(){
+    playerDirectionState(){
 
         if(this.game.click){
             this.state = 2;
 
+            // Get mouse coordinates on click
             const {x, y} = this.game?.mouse ?? {x: 0, y: 0}
 
-            if((y < (x - 128) ) && (y < (-x + 896) ))
-                this.direction = 0;
-            if((y < (x - 128) ) && (y >= (-x + 896) ))
-                this.direction = 1;
-            if( (y >= (x - 128)) && (y >= (-x + 896)) )
-                this.direction = 2;
-            if((y >= (x - 128) ) && (y < (-x + 896) ))
-                this.direction = 3;
+            /* CANVAS COORDINATES ARE DIFFERENT FROM NORMAL GRAPH COORDINATES
+            Calculating facing direction based on 'b' the y-intercept in 'y = mx + b' 
+            
+            Logic example: Using two lines (m = -1, m = 1),
+            if mouse location's 'b' is greater than player's location 'b' on line1 and line2,
+            mouse must facing up on first Quaderant
+            */
+
+            // m = 1
+            let player_b1 = this.Y - this.X; // Note: Also offset by player width / height
+            let mouse_b1 = y - x;
+
+            // m = -1
+            let player_b2 = this.Y + this.X;
+            let mouse_b2 = y + x;
+
+            // Faces Up
+            if(mouse_b1 > player_b1 && mouse_b2 > player_b2) this.direction = this.directions.down;
+            // Faces Down
+            if(mouse_b1 < player_b1 && mouse_b2 < player_b2) this.direction = this.directions.up;
+            // Faces Left
+            if(mouse_b1 > player_b1 && mouse_b2 < player_b2) this.direction = this.directions.left;
+            // Faces Right
+            if(mouse_b1 < player_b1 && mouse_b2 > player_b2) this.direction = this.directions.right;
+
+
+            // if((y < (x - 128) ) && (y < (-x + 896) ))
+            //     this.direction = 0;
+            // if((y < (x - 128) ) && (y >= (-x + 896) ))
+            //     this.direction = 1;
+            // if( (y >= (x - 128)) && (y >= (-x + 896)) )
+            //     this.direction = 2;
+            // if((y >= (x - 128) ) && (y < (-x + 896) ))
+            //     this.direction = 3;
+                
         }
         else if ((this.game.up || this.game.right || this.game.down || this.game.left)) { // To implement in future, if velocityx/y = 0 then state = 0
             this.state = 1;
