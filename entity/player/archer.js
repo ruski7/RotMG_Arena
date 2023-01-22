@@ -22,6 +22,11 @@ class Archer {
 
     };
 
+    drawDebug(ctx) {
+        ctx.strokeStyle = "Red"
+        ctx.strokeRect(this.x, this.y, this.width + this.scale * 1, this.height);
+    }
+
     loadAnimations() {
 
         let numDir = 4;
@@ -58,6 +63,7 @@ class Archer {
 
     draw(ctx) {
 
+        // Displays character animation
         switch(this.state) {
             case 0: // Idle
                 this.animations[this.state][this.direction].drawFrame(this.game.clockTick, ctx, this.x, this.y, this.scale);
@@ -69,10 +75,15 @@ class Archer {
                 this.animations[this.state][this.direction].drawFrame(this.game.clockTick, ctx, this.x, this.y, this.scale);
                 break;
         }
+
+        // Displays Player Debug Boundery
+        if(PARAMS.DEBUG) this.drawDebug(ctx);
+
     };
 
     update() {
 
+        // Determines players state and direction
         if(this.game.click){
             this.state = 2;
 
@@ -110,8 +121,6 @@ class Archer {
             else if(!this.game.up && !this.game.right && !this.game.down && this.game.left)
                 this.direction = 3;    
             */
-
-
         }
         else {
             this.state = 0;
