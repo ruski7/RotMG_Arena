@@ -19,10 +19,13 @@ class GameEngine {
         this.right = null;
         this.down = null;
         this.up = null;
+
         this.ability = null;
         this.nexus = null;
         this.hp = null;
         this.mp = null;
+
+        this.debug = null;
 
         //height for debug
         this.surfaceWidth = null;
@@ -44,12 +47,15 @@ class GameEngine {
         this.ctx = ctx;
         this.surfaceWidth = this.ctx.canvas.width;
         this.surfaceHeight = this.ctx.canvas.height;
-
+        document.getElementById("gameWorld").style.cursor = "none"; //disable cursor by default
         this.startInput();
         this.timer = new Timer();
     };
 
     start() {
+
+        this.mouse = ({ x: 0, y: 0 });
+
         this.running = true;
         const gameLoop = () => {
             this.loop();
@@ -96,6 +102,9 @@ class GameEngine {
                     break;
                 case "KeyF":
                     that.mp = true;
+                    break;
+                case "ControlLeft":
+                    that.debug = true;
                     break;
             }
         }, false);
