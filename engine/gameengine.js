@@ -168,23 +168,15 @@ class GameEngine {
         }, false);
 
         // No use for wheel movement as of yet
-        // Will be preserved for debugging
-        this.ctx.canvas.addEventListener("wheel", e => {
-            if(e.wheelDelta == -120){
-                console.log("Debugging turning on");
-                document.getElementById("debug").checked = true;
-            } else {
-                console.log("Debugging turning off");
-                document.getElementById("debug").checked = false;
-            }
-            if (PARAMS.DEBUG) {
-                console.log("WHEEL", getXandY(e), e.wheelDelta);
-            }
-            if (this.options.prevent.scrolling) {
-                e.preventDefault(); // Prevent Scrolling
-            }
-            this.wheel = e;
-        });
+        // this.ctx.canvas.addEventListener("wheel", e => {
+        //     if (PARAMS.DEBUG) {
+        //         console.log("WHEEL", getXandY(e), e.wheelDelta);
+        //     }
+        //     if (this.options.prevent.scrolling) {
+        //         e.preventDefault(); // Prevent Scrolling
+        //     }
+        //     this.wheel = e;
+        // });
         
 
     };

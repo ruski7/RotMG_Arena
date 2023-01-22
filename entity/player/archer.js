@@ -162,7 +162,7 @@ class Archer {
 
         // Determines players state and direction
         if(this.game.click){
-            this.state = 2;
+            this.state = this.states.attack;
 
             // Get mouse coordinates on click
             const {x, y} = this.game?.mouse ?? {x: 0, y: 0}
@@ -203,8 +203,8 @@ class Archer {
             //     this.direction = 3;
                 
         }
-        else if ((this.game.up || this.game.right || this.game.down || this.game.left)) { // To implement in future, if velocityx/y = 0 then state = 0
-            this.state = 1;
+        else if ((this.game.up || this.game.right || this.game.down || this.game.left) /*&& this.velocity.up - this.velocity.down + this.velocity.left - this.velocity.right != 0 */) { // To implement in future, if velocityx/y = 0 then state = 0
+            this.state = this.states.move;
 
             // RotMG replica for move and turning direction
             if(this.game.up && !this.game.down && !this.game.left)
@@ -228,7 +228,7 @@ class Archer {
             */
         }
         else {
-            this.state = 0;
+            this.state = this.states.idle;
         }
     }
 };

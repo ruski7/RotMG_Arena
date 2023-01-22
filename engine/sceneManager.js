@@ -24,7 +24,7 @@ class SceneManager {
         //testing animations - sceneManager
         this.player = new Archer(this.game, this.screenwidth/2 - (8 * 7)/2, this.screenheight/2 - (8 * 7)/2) // subracted player WIDTH or HEIGHT (same size) * SCALE / 2 to center it in the screen
         this.game.addEntity(this.player);
-        this.game.addEntity(new Cursor(this.game));
+        //this.game.addEntity(new Cursor(this.game));
 
     }
 
