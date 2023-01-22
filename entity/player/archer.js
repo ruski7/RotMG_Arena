@@ -29,6 +29,11 @@ class Archer {
 
     };
 
+    drawDebug(ctx) {
+        ctx.strokeStyle = "Red"
+        ctx.strokeRect(this.x, this.y, this.width + this.scale * 1, this.height);
+    }
+
     loadAnimations() {
 
         let numDir = 4;
@@ -80,6 +85,10 @@ class Archer {
                 this.animations[this.state][this.direction].drawFrame(this.game.clockTick, ctx, this.x, this.y, this.scale);
                 break;
         }
+
+        // Displays Player Debug Boundery
+        if(PARAMS.DEBUG) this.drawDebug(ctx);
+
     };
 
     drawDebug(ctx) {
@@ -151,6 +160,7 @@ class Archer {
 
     playerDirectionState(){
 
+        // Determines players state and direction
         if(this.game.click){
             this.state = 2;
 

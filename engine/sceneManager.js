@@ -45,8 +45,14 @@ class SceneManager {
     draw(ctx) {
 
         this.myCursor.draw(ctx);
+        if(!PARAMS.DEBUG) this.debugFlag = false;
 
         if(PARAMS.DEBUG) {
+            
+            if(!this.debugFlag) {
+                console.log("Debug Mode Activated");
+                this.debugFlag = true;
+            }
 
             /*
             let xV = "xV=" + Math.floor(this.game.mario.velocity.x);

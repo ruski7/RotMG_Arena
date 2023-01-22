@@ -144,7 +144,7 @@ class GameEngine {
 
         // Mouse Events
         this.ctx.canvas.addEventListener("mousemove", e => {
-            if (this.options.debugging && this.options.mouseMove) {
+            if (PARAMS.DEBUG && this.options.mouseMove) {
                 console.log("Mouse Moved", getXandY(e));
             }
             that.mouse = getXandY(e);
@@ -153,7 +153,7 @@ class GameEngine {
         
         // Activates only until mousedown and mouseup have been done 
         this.ctx.canvas.addEventListener("click", e => {
-            if (this.options.debugging) {
+            if (PARAMS.DEBUG) {
                 console.log("CLICK", getXandY(e));
             }
         }, false);
@@ -167,9 +167,17 @@ class GameEngine {
             that.click = false;
         }, false);
 
-        /*
+        // No use for wheel movement as of yet
+        // Will be preserved for debugging
         this.ctx.canvas.addEventListener("wheel", e => {
-            if (this.options.debugging) {
+            if(e.wheelDelta == -120){
+                console.log("Debugging turning on");
+                document.getElementById("debug").checked = true;
+            } else {
+                console.log("Debugging turning off");
+                document.getElementById("debug").checked = false;
+            }
+            if (PARAMS.DEBUG) {
                 console.log("WHEEL", getXandY(e), e.wheelDelta);
             }
             if (this.options.prevent.scrolling) {
@@ -177,7 +185,7 @@ class GameEngine {
             }
             this.wheel = e;
         });
-        */
+        
 
     };
 
